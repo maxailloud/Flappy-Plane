@@ -12,4 +12,13 @@ FlappyPlane.Player.prototype = Object.create(Phaser.Sprite.prototype);
 FlappyPlane.Player.prototype.constructor = FlappyPlane.Player;
 
 FlappyPlane.Player.prototype.update = function() {
+    if(this.angle < 90) {
+        this.angle += 2;
+    }
+};
+
+FlappyPlane.Player.prototype.flap = function() {
+    this.body.velocity.y = -400;
+
+    this.game.add.tween(this).to({angle: -30}, 100).start();
 };

@@ -31,13 +31,18 @@ FlappyPlane.Game.prototype.preload = function() {
 
 FlappyPlane.Game.prototype.create = function() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.game.physics.arcade.gravity.y = 500;
+    this.game.physics.arcade.gravity.y = 1200;
 
     this.level.create();
-    this.hud.update();
+    this.hud.create();
 
-    this.player = new FlappyPlane.Player(this.game, 100, this.game.world.centerY);
+    this.player = new FlappyPlane.Player(this.game, 325, this.game.world.centerY);
     this.game.add.existing(this.player);
+
+    var flapKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    flapKey.onDown.add(this.player.flap, this.player);
+
+    this.input.onDown.add(this.player.flap, this.player);
 };
 
 FlappyPlane.Game.prototype.update = function() {
