@@ -18,21 +18,17 @@ FlappyPlane.Game = function(game) {
     this.rnd;       //the repeatable random number generator
     //You can use any of these from any function within this State.
     //But do consider them as being 'reserved words', i.e. don't create a property for your own game called "world" or you'll over-write the world reference.
-
-    this.level;
-    this.player;
-};
-
-FlappyPlane.Game.prototype.preload = function() {
-    this.level   = new FlappyPlane.Level(this.game);
-    this.player  = new FlappyPlane.Player(this.game);
 };
 
 FlappyPlane.Game.prototype.create = function() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.physics.arcade.gravity.y = 1200;
 
-    this.level.create();
+    this.background = this.game.add.sprite(0, 0, 'flappyplane');
+    this.background.frameName = 'background';
+
+    this.ground = new FlappyPlane.Ground(this.game, 0, this.game.height - 71);
+    this.game.add.existing(this.ground);
 
     this.player = new FlappyPlane.Player(this.game, 325, this.game.world.centerY);
     this.game.add.existing(this.player);
@@ -41,10 +37,22 @@ FlappyPlane.Game.prototype.create = function() {
     flapKey.onDown.add(this.player.flap, this.player);
 
     this.input.onDown.add(this.player.flap, this.player);
+
+    this.rocks = this.game.add.group();
+
+    this.rockGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 1.25, this.generateRocks, this);
+    this.rockGenerator.timer.start();
 };
 
 FlappyPlane.Game.prototype.update = function() {
-    this.game.physics.arcade.collide(this.player, this.level.ground);
+    this.game.physics.arcade.collide(this.player, this.ground);
+};
 
-    this.level.update();
+FlappyPlane.Game.prototype.generateRocks = function() {
+    var rockY = this.game.rnd.integerInRange(-120, 120);
+    var rockGroup = this.rocks.getFirstExists(false);
+    if(!rockGroup) {
+        rockGroup = new FlappyPlane.RockGroup(this.game, this.rocks);
+    }
+    rockGroup.reset(this.game.width + rockGroup.topRock.width / 2, rockY);
 };
