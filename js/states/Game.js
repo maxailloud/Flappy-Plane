@@ -41,24 +41,10 @@ FlappyPlane.Game.prototype.create = function() {
     flapKey.onDown.add(this.player.flap, this.player);
 
     this.input.onDown.add(this.player.flap, this.player);
-
-    this.rocks = this.game.add.group();
-
-    this.rockGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 1.25, this.generateRocks, this);
-    this.rockGenerator.timer.start();
 };
 
 FlappyPlane.Game.prototype.update = function() {
     this.game.physics.arcade.collide(this.player, this.level.ground);
 
     this.level.update();
-};
-
-FlappyPlane.Game.prototype.generateRocks = function() {
-    var rockY = this.game.rnd.integerInRange(-120, 120);
-    var rockGroup = this.rocks.getFirstExists(false);
-    if(!rockGroup) {
-        rockGroup = new FlappyPlane.RockGroup(this.game, this.rocks);
-    }
-    rockGroup.reset(this.game.width + rockGroup.topRock.width / 2, rockY);
 };
