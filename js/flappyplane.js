@@ -5,6 +5,7 @@ window.onload = function() {
     game.state.add('Preloader', FlappyPlane.Preloader);
     game.state.add('MainMenu',  FlappyPlane.MainMenu);
     game.state.add('Game',      FlappyPlane.Game);
+    game.state.add('Gameover',  FlappyPlane.Gameover);
 
     game.state.start('Boot');
 };

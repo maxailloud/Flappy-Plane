@@ -45,7 +45,10 @@ FlappyPlane.Game.prototype.create = function() {
 };
 
 FlappyPlane.Game.prototype.update = function() {
-    this.game.physics.arcade.collide(this.player, this.ground);
+    this.game.physics.arcade.collide(this.player, this.ground, this.deathHandler, null, this);
+    this.rocks.forEach(function(rockGroup) {
+        this.game.physics.arcade.collide(this.player, rockGroup, this.deathHandler, null, this);
+    }, this);
 };
 
 FlappyPlane.Game.prototype.generateRocks = function() {
@@ -55,4 +58,14 @@ FlappyPlane.Game.prototype.generateRocks = function() {
         rockGroup = new FlappyPlane.RockGroup(this.game, this.rocks);
     }
     rockGroup.reset(this.game.width + rockGroup.topRock.width / 2, rockY);
+};
+
+FlappyPlane.Game.prototype.deathHandler = function() {
+    this.game.state.start('Gameover');
+};
+
+FlappyPlane.Game.prototype.shutdown = function() {
+    this.game.input.keyboard.removeKey(Phaser.Keyboard.SPACEBAR);
+    this.player.destroy();
+    this.rocks.destroy();
 };
