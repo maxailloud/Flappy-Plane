@@ -25,7 +25,6 @@ FlappyPlane.Game = function(game) {
 
 FlappyPlane.Game.prototype.preload = function() {
     this.level   = new FlappyPlane.Level(this.game);
-    this.hud     = new FlappyPlane.Hud(this.game);
     this.player  = new FlappyPlane.Player(this.game);
 };
 
@@ -34,7 +33,6 @@ FlappyPlane.Game.prototype.create = function() {
     this.game.physics.arcade.gravity.y = 1200;
 
     this.level.create();
-    this.hud.create();
 
     this.player = new FlappyPlane.Player(this.game, 325, this.game.world.centerY);
     this.game.add.existing(this.player);
@@ -43,11 +41,24 @@ FlappyPlane.Game.prototype.create = function() {
     flapKey.onDown.add(this.player.flap, this.player);
 
     this.input.onDown.add(this.player.flap, this.player);
+
+    this.rocks = this.game.add.group();
+
+    this.rockGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 1.25, this.generateRocks, this);
+    this.rockGenerator.timer.start();
 };
 
 FlappyPlane.Game.prototype.update = function() {
     this.game.physics.arcade.collide(this.player, this.level.ground);
 
     this.level.update();
-    this.hud.update();
+};
+
+FlappyPlane.Game.prototype.generateRocks = function() {
+    var rockY = this.game.rnd.integerInRange(-120, 120);
+    var rockGroup = this.rocks.getFirstExists(false);
+    if(!rockGroup) {
+        rockGroup = new FlappyPlane.RockGroup(this.game, this.rocks);
+    }
+    rockGroup.reset(this.game.width + rockGroup.topRock.width / 2, rockY);
 };

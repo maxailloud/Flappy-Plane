@@ -1,5 +1,6 @@
 FlappyPlane.Ground = function(game, x, y) {
     Phaser.TileSprite.call(this, game, x, y, 808, 71, 'flappyplane');
+
     this.frameName = "groundGrass";
 
     this.autoScroll(-200,0);
@@ -12,7 +13,7 @@ FlappyPlane.Ground = function(game, x, y) {
 };
 
 FlappyPlane.Ground.prototype = Object.create(Phaser.TileSprite.prototype);
-FlappyPlane.Ground.prototype.constructor = FlappyPlane.Player;
+FlappyPlane.Ground.prototype.constructor = FlappyPlane.Ground;
 
 FlappyPlane.Ground.prototype.update = function() {
 };
