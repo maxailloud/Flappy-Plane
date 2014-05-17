@@ -5,7 +5,7 @@ FlappyPlane.Ground = function(game, x, y) {
 
     this.autoScroll(-200,0);
 
-    this.game.physics.p2.enable(this, true);
+    this.game.physics.p2.enable(this, false);
     this.body.static = true;
 };
 
