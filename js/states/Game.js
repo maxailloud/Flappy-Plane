@@ -51,11 +51,7 @@ FlappyPlane.Game.prototype.create = function() {
     this.ground.body.collides(playerCollisionGroup);
 
     this.player.body.setCollisionGroup(playerCollisionGroup);
-
     this.player.body.collides(groundCollisionGroup, this.hitGround, this);
-
-    //  Set the player collision group
-    this.player.body.setCollisionGroup(playerCollisionGroup);
 
     var flapKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     flapKey.onDown.add(this.player.flap, this.player);
