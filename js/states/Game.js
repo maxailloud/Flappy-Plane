@@ -42,12 +42,6 @@ FlappyPlane.Game.prototype.create = function() {
     //  (which we do) - what this does is adjust the bounds to use its own collision group.
     this.game.physics.p2.updateBoundsCollisionGroup();
 
-    var groundGroup = this.game.add.group();
-    groundGroup.enableBody = true;
-    groundGroup.physicsBodyType = Phaser.Physics.P2JS;
-
-    groundGroup.add(this.ground);
-
     //  Tell the ground to use the groundCollisionGroup
     this.ground.body.setCollisionGroup(groundCollisionGroup);
 
