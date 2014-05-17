@@ -21,17 +21,47 @@ FlappyPlane.Game = function(game) {
 };
 
 FlappyPlane.Game.prototype.create = function() {
-    this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.game.physics.arcade.gravity.y = 1200;
+    this.game.physics.startSystem(Phaser.Physics.P2JS);
+    this.game.physics.p2.setImpactEvents(true);
+    this.game.physics.p2.gravity.y = 1200;
 
     this.background = this.game.add.sprite(0, 0, 'flappyplane');
     this.background.frameName = 'background';
 
-    this.ground = new FlappyPlane.Ground(this.game, 0, this.game.height - 71);
+    this.ground = new FlappyPlane.Ground(this.game, 0, this.game.height - 35);
     this.game.add.existing(this.ground);
 
     this.player = new FlappyPlane.Player(this.game, 325, this.game.world.centerY);
     this.game.add.existing(this.player);
+
+    //  Create our collision groups. One for the player, one for the groundGroup
+    var playerCollisionGroup = this.game.physics.p2.createCollisionGroup();
+    var groundCollisionGroup = this.game.physics.p2.createCollisionGroup();
+
+    //  This part is vital if you want the objects with their own collision groups to still collide with the world bounds
+    //  (which we do) - what this does is adjust the bounds to use its own collision group.
+    this.game.physics.p2.updateBoundsCollisionGroup();
+
+    var groundGroup = this.game.add.group();
+    groundGroup.enableBody = true;
+    groundGroup.physicsBodyType = Phaser.Physics.P2JS;
+
+    groundGroup.add(this.ground);
+
+    //  Tell the ground to use the groundCollisionGroup
+    this.ground.body.setCollisionGroup(groundCollisionGroup);
+
+    //  Ground will collide against the player
+    //  If you don't set this they'll not collide with anything.
+    //  The first parameter is either an array or a single collision group.
+    this.ground.body.collides(playerCollisionGroup);
+
+    this.player.body.setCollisionGroup(playerCollisionGroup);
+
+    this.player.body.collides(groundCollisionGroup, this.hitGround, this);
+
+    //  Set the player collision group
+    this.player.body.setCollisionGroup(playerCollisionGroup);
 
     var flapKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     flapKey.onDown.add(this.player.flap, this.player);
@@ -44,11 +74,11 @@ FlappyPlane.Game.prototype.create = function() {
     this.rockGenerator.timer.start();
 };
 
+FlappyPlane.Game.prototype.hitGround = function(body1, body2) {
+    console.log('pouet');
+};
+
 FlappyPlane.Game.prototype.update = function() {
-    this.game.physics.arcade.collide(this.player, this.ground, this.deathHandler, null, this);
-    this.rocks.forEach(function(rockGroup) {
-        this.game.physics.arcade.collide(this.player, rockGroup, this.deathHandler, null, this);
-    }, this);
 };
 
 FlappyPlane.Game.prototype.generateRocks = function() {

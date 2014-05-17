@@ -1,15 +1,12 @@
 FlappyPlane.Ground = function(game, x, y) {
-    Phaser.TileSprite.call(this, game, x, y, 808, 71, 'flappyplane');
+    Phaser.TileSprite.call(this, game, x, y, 1600, 70, 'flappyplane');
 
     this.frameName = "groundGrass";
 
     this.autoScroll(-200,0);
 
-    this.game.physics.arcade.enableBody(this);
-
-    this.body.allowGravity = false;
-
-    this.body.immovable = true;
+    this.game.physics.p2.enable(this, true);
+    this.body.static = true;
 };
 
 FlappyPlane.Ground.prototype = Object.create(Phaser.TileSprite.prototype);
