@@ -11,6 +11,7 @@ FlappyPlane.Preloader.prototype.preload = function() {
     this.load.setPreloadSprite(this.loadingBar);
 
     this.load.atlas('flappyplane', 'assets/gfx/flappyplane.png', 'assets/gfx/flappyplane.json');
+    this.load.physics('physicsData', 'assets/gfx/physics.json');
 };
 
 FlappyPlane.Preloader.prototype.create = function() {

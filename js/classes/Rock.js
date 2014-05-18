@@ -3,7 +3,12 @@ FlappyPlane.Rock = function(game, x, y, frameName) {
 
     this.frameName = frameName;
 
-    this.game.physics.p2.enable(this, true);
+    this.game.physics.p2.enableBody(this, true);
+
+    // remove all of the current collision shapes from the physics body
+    this.body.clearShapes();
+    // load our polygon physics data
+    this.body.loadPolygon('physicsData', frameName);
 
     this.body.fixedRotation = true;
     this.body.data.gravityScale = 0;
