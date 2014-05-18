@@ -28,7 +28,7 @@ FlappyPlane.Game.prototype.create = function() {
     this.background = this.game.add.sprite(0, 0, 'flappyplane');
     this.background.frameName = 'background';
 
-    this.ground = new FlappyPlane.Ground(this.game, 0, this.game.height - 35);
+    this.ground = new FlappyPlane.Ground(this.game, 800, this.game.height - 35);
 
     this.player = new FlappyPlane.Player(this.game, 325, this.game.world.centerY);
     this.game.add.existing(this.player);
@@ -47,7 +47,7 @@ FlappyPlane.Game.prototype.create = function() {
     this.ground.body.collides(this.playerCollisionGroup);
 
     this.player.body.setCollisionGroup(this.playerCollisionGroup);
-    this.player.body.collides([groundCollisionGroup, this.rockCollisionGroup], this.hitGround, this);
+    this.player.body.collides([groundCollisionGroup, this.rockCollisionGroup], this.deathHandler, this);
 
     var flapKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     flapKey.onDown.add(this.player.flap, this.player);
@@ -61,10 +61,6 @@ FlappyPlane.Game.prototype.create = function() {
     this.rockGenerator.timer.start();
 
     this.game.add.existing(this.ground);
-};
-
-FlappyPlane.Game.prototype.hitGround = function(body1, body2) {
-    console.log('hit');
 };
 
 FlappyPlane.Game.prototype.update = function() {
@@ -88,7 +84,11 @@ FlappyPlane.Game.prototype.generateRocks = function() {
     });
 };
 
-FlappyPlane.Game.prototype.deathHandler = function() {
+FlappyPlane.Game.prototype.deathHandler = function(body1, body2, rectangle, convex) {
+    console.log(body1);
+    console.log(body2);
+    console.log(rectangle);
+    console.log(convex);
     this.game.state.start('Gameover');
 };
 
