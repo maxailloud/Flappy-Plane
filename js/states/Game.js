@@ -38,10 +38,6 @@ FlappyPlane.Game.prototype.create = function() {
     this.rockCollisionGroup   = this.game.physics.p2.createCollisionGroup();
     var groundCollisionGroup  = this.game.physics.p2.createCollisionGroup();
 
-    //  This part is vital if you want the objects with their own collision groups to still collide with the world bounds
-    //  (which we do) - what this does is adjust the bounds to use its own collision group.
-    this.game.physics.p2.updateBoundsCollisionGroup();
-
     //  Tell the ground to use the groundCollisionGroup
     this.ground.body.setCollisionGroup(groundCollisionGroup);
 
