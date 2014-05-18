@@ -5,7 +5,6 @@ FlappyPlane.Rock = function(game, x, y, frameName) {
 
     this.game.physics.p2.enable(this, true);
 
-//    this.body.static = true;
     this.body.fixedRotation = true;
     this.body.data.gravityScale = 0;
 };
