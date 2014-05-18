@@ -8,6 +8,9 @@ FlappyPlane.Player = function(game, x, y) {
     this.animations.play('fly', 12, true);
 
     this.game.physics.p2.enableBody(this, true);
+
+    this.body.fixedRotation = true;
+    this.body.mass = 1;
 };
 
 FlappyPlane.Player.prototype = Object.create(Phaser.Sprite.prototype);

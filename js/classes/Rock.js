@@ -12,6 +12,7 @@ FlappyPlane.Rock = function(game, x, y, frameName) {
 
     this.body.fixedRotation = true;
     this.body.data.gravityScale = 0;
+    this.body.mass = 9999;
 };
 
 FlappyPlane.Rock.prototype = Object.create(Phaser.Sprite.prototype);
