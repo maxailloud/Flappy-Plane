@@ -11,7 +11,6 @@ FlappyPlane.Rock = function(game, x, y, frameName) {
     this.body.loadPolygon('physicsData', frameName);
 
     this.body.fixedRotation = true;
-    this.body.data.gravityScale = 0;
     this.body.kinematic = true;
 };
 
