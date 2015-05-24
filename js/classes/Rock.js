@@ -1,7 +1,5 @@
 FlappyPlane.Rock = function(game, x, y, frameName) {
-    Phaser.Sprite.call(this, game, x, y, 'flappyplane');
-
-    this.frameName = frameName;
+    Phaser.Sprite.call(this, game, x, y, 'flappyplane', frameName);
 
     this.game.physics.p2.enableBody(this, true);
 

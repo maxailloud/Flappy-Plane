@@ -1,7 +1,5 @@
 FlappyPlane.Ground = function(game, x, y) {
-    Phaser.TileSprite.call(this, game, x, y, 1600, 70, 'flappyplane');
-
-    this.frameName = "groundGrass";
+    Phaser.TileSprite.call(this, game, x, y, 1600, 70, 'flappyplane', 'groundGrass');
 
     this.autoScroll(-200,0);
 
