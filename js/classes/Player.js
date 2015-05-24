@@ -9,6 +9,11 @@ FlappyPlane.Player = function(game, x, y) {
 
     this.game.physics.p2.enableBody(this, true);
 
+    // remove all of the current collision shapes from the physics body
+    this.body.clearShapes();
+    // load our polygon physics data
+    this.body.loadPolygon('physicsData', 'plane');
+
     this.body.fixedRotation = true;
 };
 
