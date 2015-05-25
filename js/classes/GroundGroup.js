@@ -24,6 +24,5 @@ FlappyPlane.GroundGroup.prototype.checkWorldBounds = function() {
     }
     if(!this.rightGround.inWorld) {
         this.rightGround.reset(1200, 460);
-        this.exists = false;
     }
 };
