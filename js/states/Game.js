@@ -28,39 +28,38 @@ FlappyPlane.Game.prototype.create = function() {
     this.background = this.game.add.sprite(0, 0, 'flappyplane');
     this.background.frameName = 'background';
 
-    this.ground = new FlappyPlane.Ground(this.game, 800, this.game.height - 35);
+    this.groundGroup = new FlappyPlane.GroundGroup(this.game);
+
+    this.rocks = this.game.add.group();
 
     this.player = new FlappyPlane.Player(this.game, 325, this.game.world.centerY);
     this.game.add.existing(this.player);
 
     //  Create our collision groups. One for the player, one for the groundGroup, one for rocks
+    this.groundCollisionGroup = this.game.physics.p2.createCollisionGroup();
     this.playerCollisionGroup = this.game.physics.p2.createCollisionGroup();
-    this.rockCollisionGroup   = this.game.physics.p2.createCollisionGroup();
-    var groundCollisionGroup  = this.game.physics.p2.createCollisionGroup();
+    this.rockCollisionGroup = this.game.physics.p2.createCollisionGroup();
 
-    //  Tell the ground to use the groundCollisionGroup
-    this.ground.body.setCollisionGroup(groundCollisionGroup);
-
-    //  Ground will collide against the player
-    //  If you don't set this they'll not collide with anything.
-    //  The first parameter is either an array or a single collision group.
-    this.ground.body.collides(this.playerCollisionGroup);
+    var self = this;
+    this.groundGroup.forEach(function(element) {
+        //  Tell the rock to use the rockCollisionGroup
+        element.body.setCollisionGroup(self.groundCollisionGroup);
+        //  Ground will collide against the player
+        //  If you don't set this they'll not collide with anything.
+        //  The first parameter is either an array or a single collision group.
+        element.body.collides(self.playerCollisionGroup);
+    });
 
     this.player.body.setCollisionGroup(this.playerCollisionGroup);
-    this.player.body.collides([groundCollisionGroup, this.rockCollisionGroup], this.deathHandler, this);
+    this.player.body.collides([this.groundCollisionGroup, this.rockCollisionGroup], this.deathHandler, this);
 
     var flapKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     flapKey.onDown.add(this.player.flap, this.player);
 
     this.input.onDown.add(this.player.flap, this.player);
 
-    this.rocks = this.game.add.group();
-    this.game.physics.p2.enable(this.rocks, true);
-
     this.rockGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 1.25, this.generateRocks, this);
     this.rockGenerator.timer.start();
-
-    this.game.add.existing(this.ground);
 };
 
 FlappyPlane.Game.prototype.update = function() {
@@ -73,27 +72,28 @@ FlappyPlane.Game.prototype.generateRocks = function() {
         rockGroup = new FlappyPlane.RockGroup(this.game, this.rocks);
     }
     rockGroup.reset(this.game.width + rockGroup.topRock.width / 2, rockY);
-    var $this = this;
+    var self = this;
     rockGroup.forEach(function(element) {
         //  Tell the rock to use the rockCollisionGroup
-        element.body.setCollisionGroup($this.rockCollisionGroup);
+        element.body.setCollisionGroup(self.rockCollisionGroup);
         //  Rocks will collide against the player
         //  If you don't set this they'll not collide with anything.
         //  The first parameter is either an array or a single collision group.
-        element.body.collides([$this.playerCollisionGroup]);
+        element.body.collides([self.playerCollisionGroup]);
     });
 };
 
 FlappyPlane.Game.prototype.deathHandler = function(body1, body2, rectangle, convex) {
-    console.log(body1);
-    console.log(body2);
-    console.log(rectangle);
-    console.log(convex);
+    //console.log(body1);
+    //console.log(body2);
+    //console.log(rectangle);
+    //console.log(convex);
     this.game.state.start('Gameover');
 };
 
 FlappyPlane.Game.prototype.shutdown = function() {
     this.game.input.keyboard.removeKey(Phaser.Keyboard.SPACEBAR);
+    this.groundGroup.destroy();
     this.player.destroy();
     this.rocks.destroy();
 };

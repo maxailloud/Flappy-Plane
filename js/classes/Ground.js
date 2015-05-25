@@ -1,18 +1,17 @@
-FlappyPlane.Ground = function(game, x, y) {
-    Phaser.TileSprite.call(this, game, x, y, 1600, 70, 'flappyplane', 'groundGrass');
+FlappyPlane.Ground = function(game, x, y, frameName) {
+    Phaser.Sprite.call(this, game, x, y, 'flappyplane', frameName);
 
-    this.autoScroll(-200,0);
-
-    this.game.physics.p2.enableBody(this, true);
-    this.body.kinematic = true;
+    this.game.physics.p2.enableBody(this, false);
 
     // remove all of the current collision shapes from the physics body
     this.body.clearShapes();
     // load our polygon physics data
     this.body.loadPolygon('physicsData', this.frameName);
+
+    this.body.kinematic = true;
 };
 
-FlappyPlane.Ground.prototype = Object.create(Phaser.TileSprite.prototype);
+FlappyPlane.Ground.prototype = Object.create(Phaser.Sprite.prototype);
 FlappyPlane.Ground.prototype.constructor = FlappyPlane.Ground;
 
 FlappyPlane.Ground.prototype.update = function() {

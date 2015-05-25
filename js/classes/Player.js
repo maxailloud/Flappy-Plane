@@ -7,7 +7,7 @@ FlappyPlane.Player = function(game, x, y) {
     this.animations.add('fly', Phaser.Animation.generateFrameNames('planeRed', 1, 3), 30, true);
     this.animations.play('fly', 12, true);
 
-    this.game.physics.p2.enableBody(this, true);
+    this.game.physics.p2.enableBody(this, false);
 
     // remove all of the current collision shapes from the physics body
     //this.body.clearShapes();
