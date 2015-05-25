@@ -5,8 +5,7 @@ FlappyPlane.Preloader = function(game) {
 
 FlappyPlane.Preloader.prototype.preload = function() {
     this.background = this.add.sprite(0, 0, 'preloaderBackground');
-    this.loadingBar = this.add.sprite(this.world.centerX, this.world.centerY, 'preloaderBar');
-    this.loadingBar.anchor.set(0.5, 0.5);
+    this.loadingBar = this.add.sprite(this.world.centerX - 150, this.world.centerY - 60, 'preloaderBar');
 
     this.load.setPreloadSprite(this.loadingBar);
 
