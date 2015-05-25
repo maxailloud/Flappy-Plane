@@ -15,8 +15,8 @@ FlappyPlane.MainMenu.prototype.create = function() {
     this.plane.animations.add('fly', Phaser.Animation.generateFrameNames('planeRed', 1, 3), 30, true);
     this.plane.animations.play('fly', 12);
     this.tween = this.game.add.tween(this.plane)
-        .to({ y: this.game.world.centerY - 10, angle: -10 }, 1000, Phaser.Easing.Linear.None)
-        .to({ y: this.game.world.centerY + 20, angle: 0 }, 1000, Phaser.Easing.Linear.None)
+        .to({ y: this.game.world.centerY - 10 }, 1000, Phaser.Easing.Linear.None)
+        .to({ y: this.game.world.centerY + 10 }, 1000, Phaser.Easing.Linear.None)
         .loop()
         .start();
 
@@ -33,7 +33,7 @@ FlappyPlane.MainMenu.prototype.create = function() {
     this.tapTick = this.game.add.sprite(this.game.world.centerX + 20, this.game.world.centerY + 50, 'flappyplane');
     this.tapTick.frameName = 'tap';
 
-    this.ground = this.game.add.tileSprite(0, 400, 808, 71, 'flappyplane');
+    this.ground = this.game.add.tileSprite(0, 410, 808, 71, 'flappyplane');
     this.ground.frameName = 'groundGrass';
     this.ground.autoScroll(-200, 0);
 };

@@ -1,7 +1,6 @@
 FlappyPlane.Player = function(game, x, y) {
     Phaser.Sprite.call(this, game, x, y, 'flappyplane');
 
-
     this.animations.add('fly', Phaser.Animation.generateFrameNames('planeRed', 1, 3), 30, true);
     this.animations.play('fly', 12, true);
 
