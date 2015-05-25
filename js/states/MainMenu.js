@@ -12,6 +12,7 @@ FlappyPlane.MainMenu.prototype.create = function() {
 
     this.plane = this.game.add.sprite(this.game.world.centerX - 10, this.game.world.centerY + 10, 'flappyplane');
     this.plane.anchor.set(0.5, 0.5);
+    this.plane.scale.set(0.7, 0.7);
     this.plane.animations.add('fly', Phaser.Animation.generateFrameNames('planeRed', 1, 3), 30, true);
     this.plane.animations.play('fly', 12);
     this.tween = this.game.add.tween(this.plane)

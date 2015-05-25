@@ -4,13 +4,13 @@ FlappyPlane.Player = function(game, x, y) {
     this.animations.add('fly', Phaser.Animation.generateFrameNames('planeRed', 1, 3), 30, true);
     this.animations.play('fly', 12, true);
 
-    this.game.physics.p2.enableBody(this, true);
+    this.game.physics.p2.enableBody(this, false);
 
     // remove all of the current collision shapes from the physics body
-    this.body.clearShapes();
+    //this.body.clearShapes();
     // load our polygon physics data
     // enable only if a solution for scale issue is found
-    this.body.loadPolygon('physicsData', 'planeRed');
+    //this.body.loadPolygon('physicsData', 'planeRed');
 
     this.anchor.set(0.5, 0.5);
     this.scale.set(0.7, 0.7);
