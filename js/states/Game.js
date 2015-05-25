@@ -42,6 +42,7 @@ FlappyPlane.Game.prototype.create = function() {
 
     var self = this;
     this.groundGroup.forEach(function(element) {
+        element.bringToTop();
         //  Tell the rock to use the rockCollisionGroup
         element.body.setCollisionGroup(self.groundCollisionGroup);
         //  Ground will collide against the player
