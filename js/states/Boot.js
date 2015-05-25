@@ -12,7 +12,7 @@ FlappyPlane.Boot.prototype.create = function() {
     this.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
 
     this.input.maxPointers = 1;
-    this.stage.disableVisibilityChange = true;
+    this.stage.disableVisibilityChange = false;
 
     if(this.game.device.desktop)
     {
