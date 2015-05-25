@@ -80,7 +80,7 @@ FlappyPlane.Game.prototype.generateRocks = function() {
         //  Rocks will collide against the player
         //  If you don't set this they'll not collide with anything.
         //  The first parameter is either an array or a single collision group.
-        element.body.collides([self.playerCollisionGroup]);
+        element.body.collides(self.playerCollisionGroup);
     });
 };
 
